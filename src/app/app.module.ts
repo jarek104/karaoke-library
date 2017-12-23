@@ -9,6 +9,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMatarialModule } from './custom-matarial/custom-matarial.module';
+import { DataTableComponent } from './data-table/data-table.component';
 
 const config = {
   apiKey: 'AIzaSyC8Xx4ciBqbxD7ROBcWet5RsKrIe0CTCB0',
@@ -21,7 +22,8 @@ const config = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
