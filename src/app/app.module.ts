@@ -10,6 +10,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMatarialModule } from './custom-matarial/custom-matarial.module';
 import { DataTableComponent } from './data-table/data-table.component';
+import { SongsService } from './services/songs.service';
+
 
 const config = {
   apiKey: 'AIzaSyC8Xx4ciBqbxD7ROBcWet5RsKrIe0CTCB0',
@@ -34,7 +36,7 @@ const config = {
     AngularFirestoreModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [SongsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
