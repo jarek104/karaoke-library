@@ -9,6 +9,7 @@ import 'rxjs/add/observable/of';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SongsService } from '../services/songs.service';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-data-table',
@@ -19,9 +20,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   displayedColumns = ['Author', 'Title', 'Year', 'Genre', 'Language', 'Link'];
   songsFirestoreDocument: AngularFirestoreDocument<Song>;
   dataSource = new MatTableDataSource<Song>();
+  initialSelection = [];
+  allowMultiSelect = false;
+  selectedRowIndex = -1;
+  selection: SelectionModel<Song>;
 
   constructor(private songsService: SongsService ) {
-
+    this.selection = new SelectionModel<Song>(this.allowMultiSelect, this.initialSelection);
   }
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
@@ -37,5 +42,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+  selectRow(song) {
+    this.selectedRowIndex = song.id;
+    console.log(song);
   }
 }

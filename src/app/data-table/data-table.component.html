@@ -1,5 +1,5 @@
-<div class="container mat-elevation-z8">
-    <div class="search-header">
+<div class="container">
+    <div class="search-header mat-elevation-z8">
         <mat-toolbar>
 
             <mat-form-field class="search-box">
@@ -8,11 +8,23 @@
 
             <span class="fill-remaining-space"></span>
 
-            <button mat-raised-button color="primary">Randomize!</button>
+            <button mat-raised-button color="primary">Random song</button>
         </mat-toolbar>
     </div>
 
-    <mat-table #table [dataSource]="dataSource" matSort>
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <!-- Selection -->
+        <!-- <ng-container matColumnDef="Select">
+            <mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+            </mat-cell>
+        </ng-container> -->
+        <!-- Data -->
         <ng-container matColumnDef="Author">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Author </mat-header-cell>
             <mat-cell *matCellDef="let song"> {{song.Author}} </mat-cell>
@@ -30,42 +42,14 @@
             <mat-cell *matCellDef="let song" class="mat-column-genre"> {{song.Genre}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Language">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-genre"> Language </mat-header-cell>
-            <mat-cell *matCellDef="let song" class="mat-column-genre"> {{song.Language}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-language"> Language </mat-header-cell>
+            <mat-cell *matCellDef="let song" class="mat-column-language"> {{song.Language}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Link">
             <mat-header-cell *matHeaderCellDef> Link </mat-header-cell>
             <mat-cell *matCellDef="let song"> {{song.Link}} </mat-cell>
         </ng-container>
-        <!-- <ng-container matColumnDef="SongID">
-            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-            <mat-cell *matCellDef="let song"> {{song.SongID}} </mat-cell>
-        </ng-container> -->
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
     </mat-table>
 </div>
-<!-- <div class='table-responsive shadow'>
-    <table class="table table-hover table-bordered m-0">
-        <thead>
-            <tr>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Year</th>
-                <th>Genre</th>
-                <th>Language</th>
-                <th>Thumbnail</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let song of songs | async">
-                <td>{{song.data.Author}} </td>
-                <td>{{song.data.Title}}</td>
-                <td>{{song.data.Year}}</td>
-                <td>{{song.data.Genre}}</td>
-                <td>{{song.data.Language}}</td>
-                <td>{{song.data.Link}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div> -->
