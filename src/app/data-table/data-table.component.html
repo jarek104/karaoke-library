@@ -8,7 +8,7 @@
 
             <span class="fill-remaining-space"></span>
 
-            <button mat-raised-button color="primary">Random song</button>
+            <button mat-raised-button color="accent">Random song</button>
         </mat-toolbar>
     </div>
 
@@ -46,8 +46,10 @@
             <mat-cell *matCellDef="let song" class="mat-column-language"> {{song.Language}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Link">
-            <mat-header-cell *matHeaderCellDef> Link </mat-header-cell>
-            <mat-cell *matCellDef="let song"> {{song.Link}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef class="mat-column-genre"> Link </mat-header-cell>
+            <mat-cell *matCellDef="let song" class="mat-column-genre">
+                <a href="{{song.Link}}" mat-raised-button color="primary" target="_blank">Open</a>
+            </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>

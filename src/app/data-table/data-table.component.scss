@@ -58,3 +58,12 @@ html {
 .highlight {
     background-color: #F5F5F5;
 }
+
+.mat-table-selectable {
+    .mat-row:hover {
+        background: #eeeeee;
+    }
+    .mat-row.selected {
+        background: #f5f5f5;
+    }
+}
