@@ -1,0 +1,16 @@
+$primary-color: #3F51B5;
+.form-container {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.text-justi {
+    text-align: center;
+    color: $primary-color;
+}

@@ -5,7 +5,9 @@ import { MatButtonModule,
   MatInputModule,
   MatFormFieldModule,
   MatSortModule,
-  MatToolbarModule } from '@angular/material';
+  MatToolbarModule,
+  MatOptionModule,
+  MatSelectModule } from '@angular/material';
 
 @NgModule({
   imports: [MatButtonModule,
@@ -14,7 +16,9 @@ import { MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [MatButtonModule,
     MatCheckboxModule,
@@ -22,7 +26,9 @@ import { MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatToolbarModule],
+    MatToolbarModule,
+    MatOptionModule,
+    MatSelectModule],
   declarations: []
 })
 export class CustomMatarialModule { }
