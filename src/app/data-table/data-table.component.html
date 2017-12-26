@@ -54,6 +54,6 @@
             </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="setClickedRow(i, row)" [class.active]="i == selectedRow"></mat-row>
     </mat-table>
 </div>

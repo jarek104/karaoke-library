@@ -22,11 +22,21 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Song>();
   initialSelection = [];
   allowMultiSelect = false;
-  selectedRowIndex = -1;
-  selection: SelectionModel<Song>;
+
+  selectedRow : Number;
+  setClickedRow : Function;
 
   constructor(private songsService: SongsService ) {
-    this.selection = new SelectionModel<Song>(this.allowMultiSelect, this.initialSelection);
+    
+    this.setClickedRow = function(index, data){
+      if (index == this.selectedRow) {
+        this.selectedRow = -1;
+      }
+      else {
+        this.selectedRow = index;
+      }
+      console.log(data);
+    }
   }
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
@@ -42,9 +52,5 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
-  }
-  selectRow(song) {
-    this.selectedRowIndex = song.id;
-    console.log(song);
   }
 }

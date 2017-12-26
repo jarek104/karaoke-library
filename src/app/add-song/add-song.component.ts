@@ -13,7 +13,7 @@ export class AddSongComponent implements OnInit {
   genres = ['Pop', 'Rock', 'Disco Polo', 'Reggae', ];
   years = [];
   languages = ['English', 'Polish'];
-  songToAdd= new Song('', '', '', '', '', '');
+  songToAdd: Song = new Song('', '', '', '', '', '');
   form: FormGroup;
   
 

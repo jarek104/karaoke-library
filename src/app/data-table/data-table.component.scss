@@ -1,3 +1,5 @@
+$ligher-blue: #c5cae9;
+
 html {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -66,4 +68,7 @@ html {
 
 .margin-left {
     margin-left: 20px;
+}
+.active {
+    background: $ligher-blue;
 }
