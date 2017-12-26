@@ -26,5 +26,15 @@ export class SongsService {
   getSongs() {
     return this.songs;
   }
-
+  addSong (songToAdd: Song) {
+    const data = {
+      Author: songToAdd.Author,
+      Title: songToAdd.Title,
+      Year: songToAdd.Year,
+      Genre: songToAdd.Genre,
+      Language: songToAdd.Language,
+      Link: songToAdd.Link
+    };
+    this.afs.collection('Songs').add(data);
+  }
 }
