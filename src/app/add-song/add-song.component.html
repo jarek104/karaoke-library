@@ -1,33 +1,33 @@
-<div class="form-container container">
+<div class="form-container container" [formGroup]="form">
     <div class="page-header">
         <h3 class="text-justi mt-2" color="primary">Add new song</h3>
     </div>
     <hr width=100% align=left>
     <mat-form-field>
-        <input matInput [(ngModel)]="songToAdd.Author" placeholder="Author">
+        <input matInput formControlName="authorControl" placeholder="Author">
     </mat-form-field>
     <mat-form-field>
-        <input matInput [(ngModel)]="songToAdd.Title" placeholder="Title">
+        <input matInput formControlName="titleControl" placeholder="Title">
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Year">
-            <mat-option *ngFor="let y of years" [(ngModel)]="songToAdd.Year" value="y" name="Year" ngDefaultControl>{{y}}</mat-option>
+        <mat-select placeholder="Year" formControlName="yearControl">
+            <mat-option *ngFor="let y of years" value="{{y}}" name="Year" ngDefaultControl>{{y}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Genre">
-            <mat-option *ngFor="let g of genres" [(ngModel)]="songToAdd.Genre" value="g" name="Genre" ngDefaultControl>{{g}}</mat-option>
+        <mat-select placeholder="Genre" formControlName="genreControl">
+            <mat-option *ngFor="let g of genres" value="{{g}}" name="Genre" ngDefaultControl>{{g}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Language">
-            <mat-option *ngFor="let l of languages" [(ngModel)]="songToAdd.Language" value="l" name="Language" ngDefaultControl>{{l}}</mat-option>
+        <mat-select placeholder="Language" formControlName="languageControl">
+            <mat-option *ngFor="let l of languages"  [value]="l" name="Language" ngDefaultControl>{{l}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="YouTube Link" [(ngModel)]="songToAdd.Link">
+        <input matInput placeholder="YouTube Link" formControlName="linkControl">
     </mat-form-field>
-    <button mat-raised-button routerLink="/data" color="primary">Cancel</button>
-    <button mat-raised-button color="accent" class="float-right" (click)="addSong()">Add</button>
+    <button mat-raised-button (click)="navigateBack()" color="primary">Cancel</button>
+    <button mat-raised-button color="accent" class="float-right" [disabled]="!form.valid" (click)="addSong()">Add</button>
 
 </div>
