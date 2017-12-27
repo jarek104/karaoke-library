@@ -1,6 +1,6 @@
 <div class="form-container container" [formGroup]="form">
     <div class="page-header">
-        <h3 class="text-justi mt-2" color="primary">Add new song</h3>
+        <h3 class="text-justi mt-2" color="primary">{{pageTitle}}</h3>
     </div>
     <hr width=100% align=left>
     <mat-form-field>
@@ -21,7 +21,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-select placeholder="Language" formControlName="languageControl">
-            <mat-option *ngFor="let l of languages"  [value]="l" name="Language" ngDefaultControl>{{l}}</mat-option>
+            <mat-option *ngFor="let l of languages" [value]="l" name="Language" ngDefaultControl>{{l}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>

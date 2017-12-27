@@ -7,7 +7,9 @@ export class Song {
     public Genre?: string,
     public Year?: string,
     public Language?: string
-  ) {}
+  ) {
+    this.SongID = '0';
+  }
 
   makeid() {
     let text = '';

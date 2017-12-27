@@ -7,26 +7,13 @@
             </mat-form-field>
 
             <span class="fill-remaining-space"></span>
-            <button mat-raised-button routerLink="/add" color="accent">Add song</button>
-            <button mat-raised-button color="accent" class="m-1">Edit song</button>
-            <button mat-raised-button color="accent">Delete song</button>
+            <button mat-raised-button [routerLink]="['/edit', 0]" color="accent">Add song</button>
+            <button mat-raised-button [disabled]="selectedRow == -1" [routerLink]="['/edit', songToEdit]" color="accent" class="m-1">Edit song</button>
             <button mat-raised-button class="margin-left" color="primary">Random song</button>
         </mat-toolbar>
     </div>
 
     <mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-        <!-- Selection -->
-        <!-- <ng-container matColumnDef="Select">
-            <mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
-                </mat-checkbox>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-                </mat-checkbox>
-            </mat-cell>
-        </ng-container> -->
-        <!-- Data -->
         <ng-container matColumnDef="Author">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Author </mat-header-cell>
             <mat-cell *matCellDef="let song"> {{song.Author}} </mat-cell>

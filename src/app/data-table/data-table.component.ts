@@ -23,26 +23,29 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   initialSelection = [];
   allowMultiSelect = false;
 
-  selectedRow : Number;
-  setClickedRow : Function;
+  selectedRow: Number;
+  setClickedRow: Function;
+  songToEdit;
 
   constructor(private songsService: SongsService ) {
-    
+
     this.setClickedRow = function(index, data){
-      if (index == this.selectedRow) {
+      if (index === this.selectedRow) {
         this.selectedRow = -1;
-      }
-      else {
+        this.songToEdit = 0;
+      } else {
         this.selectedRow = index;
+        this.songToEdit = data.SongID;
       }
-      console.log(data);
-    }
+      // console.log(data.SongID);
+    };
   }
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
+    this.selectedRow = -1;
     this.songsService.getSongs().subscribe(data => {
       this.dataSource.data = data;
-      console.log(this.dataSource.data);
+      // console.log(this.dataSource.data);
     });
   }
   ngAfterViewInit() {

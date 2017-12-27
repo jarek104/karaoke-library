@@ -9,6 +9,7 @@ export class SongsService {
 
   songsCollection: AngularFirestoreCollection<Song>;
   songs: Observable<Song[]>;
+  songFirestoreDocument: AngularFirestoreDocument<Song>;
 
   constructor(public afs: AngularFirestore) {
     this.songsCollection = afs.collection('Songs');
@@ -36,5 +37,17 @@ export class SongsService {
       Link: songToAdd.Link
     };
     this.afs.collection('Songs').add(data);
+  }
+  getSongObservable (id: string): Observable<Song> {
+    if (id === '0') {
+      return Observable.of(this.initializeSong());
+    }
+
+    this.songFirestoreDocument = this.afs.doc('Songs/' + id);
+    return this.songFirestoreDocument.valueChanges();
+
+  }
+  initializeSong(): Song {
+    return new Song('', '', '', '', '', '');
   }
 }
