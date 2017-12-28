@@ -9,14 +9,18 @@ export class SongsService implements OnInit {
 
 
   songsCollection: AngularFirestoreCollection<Song>;
-  songs: Observable<Song[]>;
+  songsObservable: Observable<Song[]>;
   songFirestoreDocument: AngularFirestoreDocument<Song>;
 
   constructor(public afs: AngularFirestore) {
-    this.songsCollection = this.afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
 
-    console.log(this.songs);
-    this.songs = this.songsCollection.snapshotChanges().map(actions => {
+  }
+  ngOnInit(): void {
+  }
+
+  getSongs() {
+    this.songsCollection = this.afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
+    return this.songsCollection.snapshotChanges().map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data() as Song;
         data.SongID = a.payload.doc.id;
@@ -24,22 +28,6 @@ export class SongsService implements OnInit {
         return data;
       });
     });
-  }
-  ngOnInit(): void { 
-    // this.songsCollection = this.afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
-
-    // console.log(this.songs);
-    // this.songs = this.songsCollection.snapshotChanges().map(changes => {
-    //   return changes.map(a => {
-    //     const data = a.payload.doc.data() as Song;
-    //     data.SongID = a.payload.doc.id;
-    //     console.log(' times called snapshotchanges () in the constructor' + data);
-    //     return data;
-    //   });
-    // });
-  }
-  getSongs() {
-    return this.songs;
   }
   addSong (songToAdd: Song) {
     const data = {
