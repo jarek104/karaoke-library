@@ -14,10 +14,10 @@ import { Observable } from 'rxjs/Observable';
 })
 export class EditSongComponent implements OnInit, OnDestroy {
 
-  genres = ['Pop', 'Rock', 'Disco Polo', 'Reggae', 'Hip Hop', 'Dance', ];
+  genres = ['Pop', 'Rock', 'Disco Polo', 'Reggae', 'Hip Hop', 'Dance', 'R&B', 'Country' ];
   years = [];
   difficulties = ['Easy', 'Medium', 'Hard'];
-  languages = ['English', 'Polish'];
+  languages = ['English', 'Polish', 'Serbian'];
 
   songToEdit: Song = new Song('', '', '', '', '', '');
   editSong: Observable<Song>;
