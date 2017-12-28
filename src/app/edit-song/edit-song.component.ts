@@ -14,15 +14,17 @@ import { Observable } from 'rxjs/Observable';
 })
 export class EditSongComponent implements OnInit, OnDestroy {
 
-  genres = ['Pop', 'Rock', 'Disco Polo', 'Reggae', ];
+  genres = ['Pop', 'Rock', 'Disco Polo', 'Reggae', 'Hip Hop', 'Dance', ];
   years = [];
+  difficulties = ['Easy', 'Medium', 'Hard'];
   languages = ['English', 'Polish'];
-  songToAdd: Song = new Song('', '', '', '', '', '');
-  songToEdit: Song;
+
+  songToEdit: Song = new Song('', '', '', '', '', '');
   editSong: Observable<Song>;
   form: FormGroup;
   error;
-  pageTitle;
+  pageTitle = '';
+  addMode: Boolean;
   private sub: Subscription;
 
   constructor(private songService: SongsService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) {
@@ -36,6 +38,7 @@ export class EditSongComponent implements OnInit, OnDestroy {
       authorControl: ['', Validators.required],
       titleControl: ['', Validators.required],
       genreControl: ['', Validators.required],
+      difficultyControl: ['', Validators.required],
       yearControl: [''],
       languageControl: ['', Validators.required],
       linkControl: ['', Validators.required],
@@ -51,46 +54,69 @@ export class EditSongComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+  navigateBack() {
+    this.router.navigate(['/data']);
+  }
   addSong() {
-
-    this.songToAdd.Author = this.form.get('authorControl').value;
-    this.songToAdd.Title = this.form.get('titleControl').value;
-    this.songToAdd.Genre = this.form.get('genreControl').value;
-    this.songToAdd.Year = this.form.get('yearControl').value;
-    this.songToAdd.Language = this.form.get('languageControl').value;
-    this.songToAdd.Link = this.form.get('linkControl').value;
+    this.songObjectFromForm();
     if (this.form.valid) {
-      this.songService.addSong(this.songToAdd);
+      this.songService.addSong(this.songToEdit);
       this.router.navigate(['/data']);
     }
   }
-  navigateBack() {
+  saveSong() {
+    this.songObjectFromForm();
+    console.log(this.songToEdit);
+    console.log(this.songToEdit.SongID);
+    this.songService.updateSong(this.songToEdit);
+    this.router.navigate(['/data']);
+  }
+  deleteSong() {
+    console.log(this.songToEdit.SongID);
+    this.songService.deleteSong(this.songToEdit.SongID);
     this.router.navigate(['/data']);
   }
 
   getSong(id: string): any {
     this.songService.getSongObservable(id).subscribe(
-      (song: Song) => this.onSongRetrieved(song),
+      (song: Song) => {
+        this.onSongRetrieved(song);
+        song.SongID = id;
+      },
       (error: any) => this.error = <any>error
     );
   }
+
+  songObjectFromForm() {
+    // const tempSong = this.songService.initializeSong();
+    this.songToEdit.Author = this.form.get('authorControl').value;
+    this.songToEdit.Title = this.form.get('titleControl').value;
+    this.songToEdit.Genre = this.form.get('genreControl').value;
+    this.songToEdit.Year = this.form.get('yearControl').value;
+    this.songToEdit.Difficulty = this.form.get('difficultyControl').value;
+    this.songToEdit.Language = this.form.get('languageControl').value;
+    this.songToEdit.Link = this.form.get('linkControl').value;
+  }
+
   onSongRetrieved(song: Song): void {
     if (this.form) {
       this.form.reset();
     }
-
     this.songToEdit = song;
     
-    if (song.SongID === '0') {
+    if (song.SongID === '0' || undefined) {
+      this.addMode = true;
       this.pageTitle = 'Add New Song';
     } else {
       this.pageTitle = `Edit Song`;
+      this.addMode = false;
     }
 
     this.form.patchValue({
       authorControl: this.songToEdit.Author,
       titleControl: this.songToEdit.Title,
       genreControl: this.songToEdit.Genre,
+      difficultyControl: this.songToEdit.Difficulty,
       yearControl: this.songToEdit.Year,
       languageControl: this.songToEdit.Language,
       linkControl: this.songToEdit.Link,

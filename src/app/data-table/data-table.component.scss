@@ -1,22 +1,18 @@
 $ligher-blue: #c5cae9;
-
 html {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    min-width: 300px;
-}
-
-.mat-table {
-    overflow: auto;
-    max-height: 500px;
-}
-
+// .container {
+//     display: flex;
+//     flex-direction: column;
+//     min-width: 300px;
+// }
+// .mat-table {
+//     overflow: auto;
+// }
 .mat-header-cell.mat-sort-header-sorted {
     color: black;
 }
@@ -45,8 +41,14 @@ html {
     white-space: unset !important;
 }
 
+.mat-column-difficulty {
+    flex: 0 0 120px !important;
+    white-space: unset !important;
+}
+
 .mat-table {
     min-width: 1000px;
+    margin-bottom: 20px;
 }
 
 .search-header {
@@ -69,6 +71,7 @@ html {
 .margin-left {
     margin-left: 20px;
 }
+
 .active {
     background: $ligher-blue;
 }

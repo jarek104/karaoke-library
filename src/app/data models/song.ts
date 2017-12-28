@@ -4,9 +4,11 @@ export class Song {
     public Author: string,
     public Title: string,
     public Link: string,
+    public Difficulty: string,
     public Genre?: string,
     public Year?: string,
-    public Language?: string
+    public Language?: string,
+    
   ) {
     this.SongID = '0';
   }

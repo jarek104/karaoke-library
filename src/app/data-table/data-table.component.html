@@ -22,6 +22,10 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
             <mat-cell *matCellDef="let song"> {{song.Title}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="Difficulty">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-difficulty"> Difficulty </mat-header-cell>
+            <mat-cell *matCellDef="let song" class="mat-column-difficulty"> {{song.Difficulty}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="Year">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-year"> Year </mat-header-cell>
             <mat-cell *matCellDef="let song" class="mat-column-year"> {{song.Year}} </mat-cell>

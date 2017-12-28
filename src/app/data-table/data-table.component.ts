@@ -17,7 +17,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['Author', 'Title', 'Year', 'Genre', 'Language', 'Link'];
+  displayedColumns = ['Author', 'Title', 'Year', 'Genre', 'Difficulty', 'Language', 'Link'];
   songsFirestoreDocument: AngularFirestoreDocument<Song>;
   dataSource = new MatTableDataSource<Song>();
   initialSelection = [];
@@ -37,7 +37,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
         this.selectedRow = index;
         this.songToEdit = data.SongID;
       }
-      // console.log(data.SongID);
     };
   }
   @ViewChild(MatSort) sort: MatSort;

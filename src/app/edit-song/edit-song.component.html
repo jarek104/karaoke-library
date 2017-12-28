@@ -10,6 +10,11 @@
         <input matInput formControlName="titleControl" placeholder="Title">
     </mat-form-field>
     <mat-form-field>
+        <mat-select placeholder="Difficulty" formControlName="difficultyControl">
+            <mat-option *ngFor="let d of difficulties" value="{{d}}" name="Difficulty" ngDefaultControl>{{d}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
         <mat-select placeholder="Year" formControlName="yearControl">
             <mat-option *ngFor="let y of years" value="{{y}}" name="Year" ngDefaultControl>{{y}}</mat-option>
         </mat-select>
@@ -28,6 +33,8 @@
         <input matInput placeholder="YouTube Link" formControlName="linkControl">
     </mat-form-field>
     <button mat-raised-button (click)="navigateBack()" color="primary">Cancel</button>
-    <button mat-raised-button color="accent" class="float-right" [disabled]="!form.valid" (click)="addSong()">Add</button>
+    <button mat-raised-button color="accent" class="float-right" [disabled]="!form.valid" *ngIf="addMode" (click)="addSong()">Add</button>
+    <button mat-raised-button color="accent" class="float-right ml-2" [disabled]="!form.valid" *ngIf="!addMode" (click)="saveSong()">Save</button>
+    <button mat-raised-button color="accent" class="float-right" *ngIf="!addMode" (click)="deleteSong()">Delete</button>
 
 </div>
