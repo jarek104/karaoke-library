@@ -3,21 +3,21 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs/Observable';
 import { Song } from '../data models/song';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-  
+
 @Injectable()
 export class SongsService implements OnInit {
-  
+
 
   songsCollection: AngularFirestoreCollection<Song>;
   songs: Observable<Song[]>;
   songFirestoreDocument: AngularFirestoreDocument<Song>;
 
   constructor(public afs: AngularFirestore) {
-    this.songsCollection = afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
-    
+    this.songsCollection = this.afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
+
     console.log(this.songs);
-    this.songs = this.songsCollection.snapshotChanges().map(changes => {
-      return changes.map(a => {
+    this.songs = this.songsCollection.snapshotChanges().map(actions => {
+      return actions.map(a => {
         const data = a.payload.doc.data() as Song;
         data.SongID = a.payload.doc.id;
         console.log(' times called snapshotchanges () in the constructor' + data);
@@ -25,7 +25,19 @@ export class SongsService implements OnInit {
       });
     });
   }
-  ngOnInit(): void { this.songs = new Observable<Song[]>(); }
+  ngOnInit(): void { 
+    // this.songsCollection = this.afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
+
+    // console.log(this.songs);
+    // this.songs = this.songsCollection.snapshotChanges().map(changes => {
+    //   return changes.map(a => {
+    //     const data = a.payload.doc.data() as Song;
+    //     data.SongID = a.payload.doc.id;
+    //     console.log(' times called snapshotchanges () in the constructor' + data);
+    //     return data;
+    //   });
+    // });
+  }
   getSongs() {
     return this.songs;
   }
