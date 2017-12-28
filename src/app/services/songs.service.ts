@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import { Song } from '../data models/song';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
   
 @Injectable()
-export class SongsService {
+export class SongsService implements OnInit {
+  
 
   songsCollection: AngularFirestoreCollection<Song>;
   songs: Observable<Song[]>;
@@ -12,17 +14,18 @@ export class SongsService {
 
   constructor(public afs: AngularFirestore) {
     this.songsCollection = afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
-
+    
+    console.log(this.songs);
     this.songs = this.songsCollection.snapshotChanges().map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Song;
         data.SongID = a.payload.doc.id;
+        console.log(' times called snapshotchanges () in the constructor' + data);
         return data;
       });
     });
-
   }
-
+  ngOnInit(): void { this.songs = new Observable<Song[]>(); }
   getSongs() {
     return this.songs;
   }

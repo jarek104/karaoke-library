@@ -43,10 +43,9 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
     this.selectedRow = -1;
-
     this.sub = this.songsService.getSongs().subscribe(data => {
       this.dataSource.data = data;
-      // console.log(this.dataSource.data);
+      // console.log('table comp ' + this.dataSource.data);
     });
   }
   ngOnDestroy() {
