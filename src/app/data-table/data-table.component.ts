@@ -8,21 +8,22 @@ import { CollectionViewer } from '@angular/cdk/collections';
 import 'rxjs/add/observable/of';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SongsService } from '../services/songs.service';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit, AfterViewInit {
+export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns = ['Author', 'Title', 'Year', 'Genre', 'Difficulty', 'Language', 'Link'];
   songsFirestoreDocument: AngularFirestoreDocument<Song>;
   dataSource = new MatTableDataSource<Song>();
   initialSelection = [];
   allowMultiSelect = false;
-
+  private sub: Subscription;
   selectedRow: Number;
   setClickedRow: Function;
   songToEdit;
@@ -42,10 +43,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
     this.selectedRow = -1;
-    this.songsService.getSongs().subscribe(data => {
+    this.sub = this.songsService.getSongs().subscribe(data => {
       this.dataSource.data = data;
       // console.log(this.dataSource.data);
     });
+  }
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
