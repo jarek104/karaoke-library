@@ -11,7 +11,7 @@ export class SongsService implements OnInit {
   songsCollection: AngularFirestoreCollection<Song>;
   songsObservable: Observable<Song[]>;
   songFirestoreDocument: AngularFirestoreDocument<Song>;
-
+  private _count;
   constructor(public afs: AngularFirestore) {
 
   }
@@ -24,10 +24,13 @@ export class SongsService implements OnInit {
       return actions.map(a => {
         const data = a.payload.doc.data() as Song;
         data.SongID = a.payload.doc.id;
-        console.log(' times called snapshotchanges () in the constructor' + data);
+        this._count = actions.length;
         return data;
       });
     });
+  }
+  getRandomSongIndex(): number {
+    return Math.floor(Math.random() * this._count);
   }
   addSong (songToAdd: Song) {
     const data = {

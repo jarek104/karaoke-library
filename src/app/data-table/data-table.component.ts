@@ -21,12 +21,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   displayedColumns = ['Author', 'Title', 'Year', 'Genre', 'Difficulty', 'Language', 'Link'];
   songsFirestoreDocument: AngularFirestoreDocument<Song>;
   dataSource = new MatTableDataSource<Song>();
-  initialSelection = [];
-  allowMultiSelect = false;
-  private sub: Subscription;
   selectedRow: Number;
   setClickedRow: Function;
   songToEdit;
+
+  temp: Song[];
 
   constructor(private songsService: SongsService ) {
 
@@ -51,7 +50,10 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-
+  openRandom() {
+    this.temp = this.dataSource.data;
+    window.open(this.temp[this.songsService.getRandomSongIndex()].Link);
+  }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
