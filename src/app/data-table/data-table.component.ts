@@ -25,10 +25,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   setClickedRow: Function;
   songToEdit;
 
-  temp: Song[];
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private songsService: SongsService ) {
-
     this.setClickedRow = function(index, data){
       if (index === this.selectedRow) {
         this.selectedRow = -1;
@@ -39,7 +38,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       }
     };
   }
-  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
     this.selectedRow = -1;
     this.songsService.getSongs().subscribe(data => {
@@ -47,13 +46,16 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
     });
   }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
+
   openRandom() {
-    this.temp = this.dataSource.data;
-    window.open(this.temp[this.songsService.getRandomSongIndex()].Link);
+    const rand = Math.floor(Math.random() * this.dataSource.data.length);
+    window.open(this.dataSource.data[rand].Link);
   }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();

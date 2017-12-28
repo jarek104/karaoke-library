@@ -5,18 +5,13 @@ import { Song } from '../data models/song';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Injectable()
-export class SongsService implements OnInit {
-
-
+export class SongsService {
+  
   songsCollection: AngularFirestoreCollection<Song>;
   songsObservable: Observable<Song[]>;
   songFirestoreDocument: AngularFirestoreDocument<Song>;
-  private _count;
-  constructor(public afs: AngularFirestore) {
-
-  }
-  ngOnInit(): void {
-  }
+  
+  constructor(public afs: AngularFirestore) {}
 
   getSongs() {
     this.songsCollection = this.afs.collection('Songs', ref => ref.orderBy('Author', 'asc'));
@@ -24,14 +19,11 @@ export class SongsService implements OnInit {
       return actions.map(a => {
         const data = a.payload.doc.data() as Song;
         data.SongID = a.payload.doc.id;
-        this._count = actions.length;
         return data;
       });
     });
   }
-  getRandomSongIndex(): number {
-    return Math.floor(Math.random() * this._count);
-  }
+
   addSong (songToAdd: Song) {
     const data = {
       Author: songToAdd.Author,
@@ -44,10 +36,12 @@ export class SongsService implements OnInit {
     };
     this.afs.collection('Songs').add(data);
   }
+
   deleteSong(id: string) {
     console.log('song id ' + id);
     this.afs.doc('Songs/' + id).delete();
   }
+
   updateSong(edited: Song) {
     this.afs.doc('Songs/' + edited.SongID).update({
       Author: edited.Author,
@@ -69,6 +63,7 @@ export class SongsService implements OnInit {
     return this.songFirestoreDocument.valueChanges();
 
   }
+
   initializeSong(): Song {
     return new Song('', '', '', 'Medium', 'Pop', '', 'English');
   }
